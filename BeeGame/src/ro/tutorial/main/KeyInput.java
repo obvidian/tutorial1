@@ -54,6 +54,8 @@ public class KeyInput extends KeyAdapter{
 				if (key == KeyEvent.VK_A) tempObject.setVelX(0);
 			}
 			
+			if ( key == KeyEvent.VK_ESCAPE) System.exit(1);
+			
 //			if (tempObject.getID() == ID.Palyer2) {
 //				//key events for player 2
 //				

@@ -20,6 +20,7 @@ public class Game extends Canvas implements Runnable {
 
 	private Random r;
 	private Handler handler;
+	private HUD hud;
 
 	public Game() {
 		handler = new Handler();
@@ -27,6 +28,8 @@ public class Game extends Canvas implements Runnable {
 
 		new Window(WIDTH, HEIGHT, "Just a Game", this);
 
+		hud = new HUD();
+		
 		r = new Random();
 
 		// for (int i = 0; i< 50; i++) {
@@ -37,9 +40,8 @@ public class Game extends Canvas implements Runnable {
 		handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Palyer));
 		// handler.addObject(new Player(WIDTH/3 -32, HEIGHT/3- 32, ID.Palyer2));
 
-		for (int i = 0; i < 20; i++) {
-			handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy));
-		}
+		handler.addObject(new BasicEnemy(r.nextInt(WIDTH), r.nextInt(HEIGHT), ID.BasicEnemy));
+
 	}
 
 	public synchronized void start() {
@@ -58,6 +60,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void run() {
+		this.requestFocus();
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
@@ -87,6 +90,7 @@ public class Game extends Canvas implements Runnable {
 
 	private void tick() {
 		handler.tick();
+		hud.tick();
 	}
 
 	private void render() {
@@ -101,7 +105,10 @@ public class Game extends Canvas implements Runnable {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 
+		
+		
 		handler.render(g);
+		hud.render(g);
 
 		g.dispose();
 		bs.show();
